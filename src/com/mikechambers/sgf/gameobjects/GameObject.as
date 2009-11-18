@@ -30,8 +30,8 @@ package com.mikechambers.sgf.gameobjects
 	import flash.geom.Rectangle;
 	import flash.display.DisplayObject;
 		
-	import com.mikechambers.sgf.engine.events.TickEvent;
-	import com.mikechambers.sgf.engine.TickManager;		
+	import com.mikechambers.sgf.events.TickEvent;
+	import com.mikechambers.sgf.time.TickManager;		
 		
 	import com.mikechambers.sgf.memory.IMemoryManageable;
 	import com.mikechambers.sgf.pools.IGameObjectPoolable;		

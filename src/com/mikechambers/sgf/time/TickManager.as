@@ -22,7 +22,7 @@
 	THE SOFTWARE.
 */
 
-package com.mikechambers.sgf.engine
+package com.mikechambers.sgf.time
 {
 	import flash.events.EventDispatcher;
 
