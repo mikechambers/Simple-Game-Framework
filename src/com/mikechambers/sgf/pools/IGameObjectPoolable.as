@@ -21,3 +21,23 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 	THE SOFTWARE.
 */
+
+package com.mikechambers.sgf.pools
+{
+
+	import flash.geom.Rectangle;
+	import flash.display.DisplayObject;
+	
+	public interface IGameObjectPoolable
+	{
+	
+		function initialize(bounds:Rectangle, 
+										target:DisplayObject = null, 
+										modifier:Number = 1):void
+		function start():void;
+		function pause():void;
+	
+	}
+
+}
+

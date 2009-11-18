@@ -21,3 +21,114 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 	THE SOFTWARE.
 */
+
+package com.mikechambers.sgf.gameobjects
+{
+	import flash.events.Event;
+	import flash.display.MovieClip;
+	import flash.geom.Point;		
+	import flash.geom.Rectangle;
+	import flash.display.DisplayObject;
+		
+	import com.mikechambers.sgf.engine.events.TickEvent;
+	import com.mikechambers.sgf.engine.TickManager;		
+		
+	import com.mikechambers.sgf.memory.IMemoryManageable;
+	import com.mikechambers.sgf.pools.IGameObjectPoolable;		
+		
+	public class GameObject extends MovieClip implements IMemoryManageable, IGameObjectPoolable
+	{
+		
+		protected var health:Number = 1;
+		protected var __target:DisplayObject;
+		protected var bounds:Rectangle;
+		protected var modifier:Number = 0;
+		
+		protected var tickManager:TickManager;	
+		
+		public function GameObject()
+		{
+			super();		
+			
+			mouseEnabled = false;
+			mouseChildren = false;
+			
+			addEventListener(Event.ADDED_TO_STAGE, onStageAdded, false, 0, 
+																		true);
+																														
+			cacheAsSurface = true;
+		}
+		
+		public function initialize(bounds:Rectangle, 
+										target:DisplayObject = null, 
+										modifier:Number = 1):void
+		{
+			this.bounds = bounds;
+			__target = target;
+			this.modifier = modifier;		
+		}
+		
+		protected function onStageAdded(e:Event):void
+		{
+			if(!tickManager)
+			{
+				tickManager = TickManager.getInstance();
+			}
+			
+			removeEventListener(Event.ADDED_TO_STAGE, onStageAdded);
+			addEventListener(Event.REMOVED_FROM_STAGE, onStageRemoved, false,
+																		0, true);
+		}
+		
+		protected function onStageRemoved(e:Event):void
+		{
+			addEventListener(Event.ADDED_TO_STAGE, onStageAdded, false, 0, 
+																		true);
+			removeEventListener(Event.REMOVED_FROM_STAGE, onStageRemoved);																
+		}
+
+		protected function onTick(e:TickEvent):void
+		{
+		}		
+		
+		public function set target(v:DisplayObject):void
+		{
+			__target = v;
+		}
+		
+		public function start():void
+		{
+			tickManager.addEventListener(TickEvent.TICK, onTick, false, 0, true);
+
+		}
+		
+		public function pause():void
+		{
+			tickManager.removeEventListener(TickEvent.TICK, onTick);
+		}		
+		
+		protected function generateRandomBoundsPoint():Point
+		{
+			var p:Point = new Point();
+			p.x = Math.random() * bounds.width;
+			p.y = Math.random() * bounds.height;
+			
+			return p;
+		}
+	
+		public function dealloc():void
+		{			
+			if(tickManager)
+			{				
+				tickManager.removeEventListener(TickEvent.TICK, onTick);
+
+				tickManager = null;
+			}
+			
+			removeEventListener(Event.ADDED_TO_STAGE, onStageAdded);
+			removeEventListener(Event.REMOVED_FROM_STAGE, onStageRemoved);
+		}	
+	
+	}
+
+}

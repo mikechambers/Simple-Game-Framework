@@ -21,3 +21,61 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 	THE SOFTWARE.
 */
+
+package com.mikechambers.sgf.sound
+{
+
+	import flash.utils.Dictionary;
+	import flash.media.Sound;
+	import flash.media.SoundTransform;
+	
+	public class SoundManager
+	{
+		private static var instance:SoundManager;
+		
+		private var sounds:Dictionary;
+		
+		public function SoundManager()
+		{
+			blips = new Array();
+			sounds = new Dictionary();
+
+			super();
+		}
+		
+		public static function getInstance():SoundManager
+		{
+			if(!instance)
+			{
+				instance = new SoundManager();
+			}
+			
+			return instance;
+		}
+		
+		public function initializeSounds():void
+		{			
+			var st:SoundTransform = new SoundTransform(0);
+			
+			for each(var sound:Sound in sounds)
+			{
+				sound.play(0,0,st);
+			}
+			
+			//throw event once all sounds have been initialized / loaded?
+		}		
+		
+		public function getSound(soundClass:Class):Sound
+		{
+			return sounds[soundClass];
+		}
+		
+		public function addSound(soundClass:Class):void
+		{
+			sounds[soundClass] = new soundClass();
+		}
+
+	
+	}
+
+}

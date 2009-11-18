@@ -22,25 +22,22 @@
 	THE SOFTWARE.
 */
 
-package com.mikechambers.sgf.pools
+package com.mikechambers.pewpew.engine.pools
 {
-	public class ObjectPool
+	
+	import flash.display.DisplayObject;
+	import flash.utils.Dictionary;
+	
+	public class CacheableDisplayObjectPool
 	{
+		private static var instance:CacheableDisplayObjectPool = null;
+						
 		private var pools:Dictionary;
-		private static var instance:ObjectPool;
-		public function ObjectPool()
-		{
-			pools = new Dictionary();
-		}
 		
-		public static function getInstance():ObjectPool
+		public function CacheableDisplayObjectPool()
 		{
-			if(!instance)
-			{
-				instance = new ObjectPool();
-			}
-			
-			return instance;
+			super();
+			pools = new Dictionary();
 		}
 		
 		private function getPool(classType:Class):Array
@@ -55,9 +52,19 @@ package com.mikechambers.sgf.pools
 			return pool;
 		}
 		
-		public function getObject(classType:Class):Object
+		public static function getInstance(cacheAsSurface:Boolean = false):GameObjectPool
 		{
-			var go:Object;
+			if(!instance)
+			{
+				instance = new CacheableDisplayObjectPool(cacheAsSurface);
+			}
+			
+			return instance;
+		}
+		
+		public function getGameObject(classType:Class):CacheableDisplayObjectPool
+		{
+			var go:DisplayObject;
 			
 			var pool:Array = getPool(classType);
 			
@@ -73,15 +80,18 @@ package com.mikechambers.sgf.pools
 			return go;
 		}
 		
-		public function returnGameObject(go:GameObject):void
+		public function returnGameObject(go:DisplayObject):void
 		{			
 			//put this property in game object as a static prop
 			var classType:Class = go["constructor"] as Class;
 						
 			var pool:Array = getPool(classType);
 			pool.push(go);
-		}		
-		
-		
+			
+			//need to allow these values to be set
+			go.x = -50;
+			go.y = -50;
+		}
 	}
 }
+
