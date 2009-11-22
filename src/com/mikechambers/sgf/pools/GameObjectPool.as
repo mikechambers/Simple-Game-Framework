@@ -22,7 +22,7 @@
 	THE SOFTWARE.
 */
 
-package com.mikechambers.pewpew.engine.pools
+package com.mikechambers.sgf.pools
 {
 	
 	import com.mikechambers.sgf.gameobjects.GameObject;
