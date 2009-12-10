@@ -49,7 +49,7 @@ package com.mikechambers.sgf.utils
 			return radians;
 		}
 		
-		public static function disanceBetweenPoints(p1:Point, p2:Point):Number
+		public static function distanceBetweenPoints(p1:Point, p2:Point):Number
 		{
 			var dx:Number = p1.x - p2.x;
 			var dy:Number = p1.y - p1.y;
