@@ -190,62 +190,49 @@ package com.mikechambers.sgf.gestures
 						angle < LEFT_ANGLE + _angleThreashold)
 			{
 				out = new GestureEvent(GestureEvent.SWIPE_LEFT);
-				out.swipeAngle = angle;
-				dispatchEvent(out);
 			}
 			else if(angle > RIGHT_ANGLE - _angleThreashold && 
 					angle > (RIGHT_ANGLE * -1) + _angleThreashold)
 			{
 				out = new GestureEvent(GestureEvent.SWIPE_RIGHT);
-				out.swipeAngle = angle;
-				dispatchEvent(out);
 			}
 			else if(angle < TOP_ANGLE + _angleThreashold &&
 				angle > TOP_ANGLE - _angleThreashold)
 			{
 				out = new GestureEvent(GestureEvent.SWIPE_UP);
-				out.swipeAngle = angle;
-				dispatchEvent(out);
 			}
 			else if(angle < BOTTOM_ANGLE + _angleThreashold &&
 				angle > BOTTOM_ANGLE - _angleThreashold)
 			{
 				out = new GestureEvent(GestureEvent.SWIPE_DOWN);
-				out.swipeAngle = angle;
-				dispatchEvent(out);
 			}
 			else if(angle > TOP_LEFT_ANGLE - _angleThreashold &&
 					angle < TOP_LEFT_ANGLE + _angleThreashold)
 			{
-				out = new GestureEvent(GestureEvent.SWIPE_UP_LEFT);
-				out.swipeAngle = angle;
-				dispatchEvent(out);				
+				out = new GestureEvent(GestureEvent.SWIPE_UP_LEFT);			
 			}
 			else if(angle < BOTTOM_LEFT_ANGLE + _angleThreashold &&
 						angle > BOTTOM_LEFT_ANGLE - _angleThreashold)
 			{
-				out = new GestureEvent(GestureEvent.SWIPE_DOWN_LEFT);
-				out.swipeAngle = angle;
-				dispatchEvent(out);	
+				out = new GestureEvent(GestureEvent.SWIPE_DOWN_LEFT);	
 			}
 			else if(angle > TOP_RIGHT_ANGLE - _angleThreashold &&
 					angle < TOP_RIGHT_ANGLE + _angleThreashold)
 			{
-				out = new GestureEvent(GestureEvent.SWIPE_UP_RIGHT);
-				out.swipeAngle = angle;
-				dispatchEvent(out);				
+				out = new GestureEvent(GestureEvent.SWIPE_UP_RIGHT);		
 			}
 			else if(angle < BOTTOM_RIGHT_ANGLE + _angleThreashold &&
 					angle > BOTTOM_RIGHT_ANGLE - _angleThreashold)
 			{
 				out = new GestureEvent(GestureEvent.SWIPE_DOWN_RIGHT);
-				out.swipeAngle = angle;
-				dispatchEvent(out);
 			}
 			
 			if(out)
 			{
 				_target.removeEventListener(Event.ENTER_FRAME, onEnterFrame);
+				
+				out.swipeAngle = angle;
+				dispatchEvent(out);
 			}
 		}
 		
