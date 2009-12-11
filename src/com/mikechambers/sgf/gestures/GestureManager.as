@@ -245,8 +245,6 @@ package com.mikechambers.sgf.gestures
 			
 			if(out)
 			{
-				//we broadcast the event
-				//not unregister handlers
 				_target.removeEventListener(Event.ENTER_FRAME, onEnterFrame);
 			}
 		}
