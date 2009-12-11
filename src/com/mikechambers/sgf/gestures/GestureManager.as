@@ -1,7 +1,7 @@
 package com.mikechambers.sgf.gestures
 {
-	import com.mikechambers.sgf.utils.MathUtil;
 	import com.mikechambers.sgf.gestures.events.GestureEvent;
+	import com.mikechambers.sgf.utils.MathUtil;
 	
 	import flash.display.InteractiveObject;
 	import flash.events.Event;
@@ -16,14 +16,47 @@ package com.mikechambers.sgf.gestures
 		//private var _mouseDown:Boolean = false;
 		private var _startPoint:Point = new Point();
 		
-		private var _distanceThreshhold:Number = 20;
-		private var _angleThreashhold:Number = .2;
+		private const TOP_ANGLE:Number = 1.57;
+		private const RIGHT_ANGLE:Number = 3.14;
+		private const BOTTOM_ANGLE:Number = -1.57;
+		private const LEFT_ANGLE:Number = 0;
+		private const TOP_LEFT_ANGLE:Number = .78;
+		private const BOTTOM_LEFT_ANGLE:Number = -.78;
+		private const TOP_RIGHT_ANGLE:Number = 2.36;
+		private const BOTTOM_RIGHT_ANGLE:Number = -2.36;		
 		
-		public function GestureManager(target:InteractiveObject = null)
+		private var _distanceThreshold:Number;
+		private var _angleThreashhold:Number;
+		
+		public function GestureManager(target:InteractiveObject = null, 
+									   distanceThreshold:Number = 20, 
+									   angleThreshold:Number = .39)
 		{
+			this.distanceThreshold = distanceThreshold;
+			this.angleThreashhold = angleThreshold;
 			this.target = target;
 		}
 		 
+		public function get angleThreashhold():Number
+		{
+			return _angleThreashhold;
+		}
+
+		public function set angleThreashhold(value:Number):void
+		{
+			_angleThreashhold = value;
+		}
+
+		public function get distanceThreshold():Number
+		{
+			return _distanceThreshold;
+		}
+
+		public function set distanceThreshold(value:Number):void
+		{
+			_distanceThreshold = value;
+		}
+
 		public function get target():InteractiveObject
 		{
 			return _target;
@@ -71,7 +104,7 @@ package com.mikechambers.sgf.gestures
 			
 			var dist:Number = MathUtil.distanceBetweenPoints(_startPoint, tempPoint);
 			
-			if(dist < _distanceThreshhold)
+			if(dist < _distanceThreshold)
 			{
 				return;
 			}
@@ -79,38 +112,73 @@ package com.mikechambers.sgf.gestures
 			var angle:Number = MathUtil.getAngleBetweenPoints(_startPoint, tempPoint);
 			
 			var out:GestureEvent;
-			if(angle > 0 - _angleThreashhold && 
-						angle < _angleThreashhold)
+			if(angle > LEFT_ANGLE - _angleThreashhold && 
+						angle < LEFT_ANGLE + _angleThreashhold)
 			{
 				out = new GestureEvent(GestureEvent.SWIPE_LEFT);
+				out.swipeAngle = angle;
 				dispatchEvent(out);
 				trace("drag left");
 			}
-			else if(angle > Math.PI - _angleThreashhold && 
-					angle > (Math.PI * -1) + _angleThreashhold)//convert 6.1
+			else if(angle > RIGHT_ANGLE - _angleThreashhold && 
+					angle > (RIGHT_ANGLE * -1) + _angleThreashhold)//convert 6.1
 			{
 				out = new GestureEvent(GestureEvent.SWIPE_RIGHT);
+				out.swipeAngle = angle;
 				dispatchEvent(out);
 				
 				trace("drag right");	
 			}
-			else if(angle < 1.5 + _angleThreashhold &&
-				angle > 1.5 - _angleThreashhold)
+			else if(angle < TOP_ANGLE + _angleThreashhold &&
+				angle > TOP_ANGLE - _angleThreashhold)
 			{
 				out = new GestureEvent(GestureEvent.SWIPE_UP);
+				out.swipeAngle = angle;
 				dispatchEvent(out);
 				
 				trace("drag up");
 			}
-			else if(angle < -1.5 + _angleThreashhold &&
-				angle > -1.5 - _angleThreashhold)
+			else if(angle < BOTTOM_ANGLE + _angleThreashhold &&
+				angle > BOTTOM_ANGLE - _angleThreashhold)
 			{
 				out = new GestureEvent(GestureEvent.SWIPE_DOWN);
+				out.swipeAngle = angle;
 				dispatchEvent(out);
 				
 				trace("drag down");
 			}
-			
+			else if(angle > TOP_LEFT_ANGLE - _angleThreashhold &&
+					angle < TOP_LEFT_ANGLE + _angleThreashhold)
+			{
+				out = new GestureEvent(GestureEvent.SWIPE_UP_LEFT);
+				out.swipeAngle = angle;
+				dispatchEvent(out);				
+				trace("top left");
+			}
+			else if(angle < BOTTOM_LEFT_ANGLE + _angleThreashhold &&
+						angle > BOTTOM_LEFT_ANGLE - _angleThreashhold)
+			{
+				out = new GestureEvent(GestureEvent.SWIPE_DOWN_LEFT);
+				out.swipeAngle = angle;
+				dispatchEvent(out);	
+				trace("bottom left");
+			}
+			else if(angle > TOP_RIGHT_ANGLE - _angleThreashhold &&
+					angle < TOP_RIGHT_ANGLE + _angleThreashhold)
+			{
+				out = new GestureEvent(GestureEvent.SWIPE_UP_RIGHT);
+				out.swipeAngle = angle;
+				dispatchEvent(out);				
+				trace("top right");
+			}
+			else if(angle < BOTTOM_RIGHT_ANGLE + _angleThreashhold &&
+					angle > BOTTOM_RIGHT_ANGLE - _angleThreashhold)
+			{
+				out = new GestureEvent(GestureEvent.SWIPE_DOWN_RIGHT);
+				out.swipeAngle = angle;
+				dispatchEvent(out);
+				trace("bottom right");
+			}
 			
 			if(out)
 			{
