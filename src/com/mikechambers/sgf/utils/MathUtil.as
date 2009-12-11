@@ -52,7 +52,7 @@ package com.mikechambers.sgf.utils
 		public static function distanceBetweenPoints(p1:Point, p2:Point):Number
 		{
 			var dx:Number = p1.x - p2.x;
-			var dy:Number = p1.y - p1.y;
+			var dy:Number = p1.y - p2.y;
 			var dist:Number = Math.sqrt(dx * dx + dy * dy);
 			
 			return dist;
