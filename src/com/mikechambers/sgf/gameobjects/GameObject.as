@@ -29,6 +29,7 @@ package com.mikechambers.sgf.gameobjects
 	import flash.geom.Point;		
 	import flash.geom.Rectangle;
 	import flash.display.DisplayObject;
+	import flash.geom.Matrix;
 		
 	import com.mikechambers.sgf.events.TickEvent;
 	import com.mikechambers.sgf.time.TickManager;		
@@ -56,7 +57,8 @@ package com.mikechambers.sgf.gameobjects
 			addEventListener(Event.ADDED_TO_STAGE, onStageAdded, false, 0, 
 																		true);
 																														
-			cacheAsSurface = true;
+			cacheAsBitmap = true;
+			cacheAsBitmapMatrix = new Matrix();
 		}
 		
 		public function initialize(bounds:Rectangle, 
