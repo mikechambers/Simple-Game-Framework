@@ -47,6 +47,7 @@ package com.mikechambers.sgf.time
 			super();
 		}
 		
+		private var _isRunning:Boolean = false;
 		private static var instance:TickManager = null;
 		public static function getInstance():TickManager
 		{
@@ -60,13 +61,19 @@ package com.mikechambers.sgf.time
 		
 		public function start():void
 		{
+			_isRunning = true;
 			timerSprite.addEventListener(Event.ENTER_FRAME, onTimer);
 		}
 		
 		public function pause():void
 		{
-			//timer.stop();
+			_isRunning = false;
 			timerSprite.removeEventListener(Event.ENTER_FRAME, onTimer);
+		}
+		
+		public function get isRunning():Boolean
+		{
+			return _isRunning;
 		}
 		
 		public function dealloc():void
