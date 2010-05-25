@@ -52,11 +52,11 @@ package com.mikechambers.sgf.pools
 			return pool;
 		}
 		
-		public static function getInstance(cacheAsSurface:Boolean = false):GameObjectPool
+		public static function getInstance(cache:Boolean = false):GameObjectPool
 		{
 			if(!instance)
 			{
-				instance = new CacheableDisplayObjectPool(cacheAsSurface);
+				instance = new CacheableDisplayObjectPool(cache);
 			}
 			
 			return instance;
