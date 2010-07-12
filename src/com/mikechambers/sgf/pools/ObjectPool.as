@@ -79,7 +79,22 @@ package com.mikechambers.sgf.pools
 			var classType:Class = go["constructor"] as Class;
 						
 			var pool:Array = getPool(classType);
-			pool.push(go);
+			
+			var hasObject:Boolean = false;
+			
+			for each(var g:Object in pool)
+			{
+				if(g == go)
+				{
+					hasObject = true;
+					break;
+				}
+			}
+			
+			if(hasObject)
+			{
+				pool.push(go);
+			}			
 		}		
 		
 		
