@@ -99,7 +99,7 @@ package com.mikechambers.sgf.pools
 				}
 			}
 			
-			if(hasObject)
+			if(!hasObject)
 			{
 				pool.push(go);
 			}
