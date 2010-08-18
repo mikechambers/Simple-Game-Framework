@@ -26,6 +26,7 @@ package com.mikechambers.sgf.pools
 {
 	
 	import com.mikechambers.sgf.gameobjects.GameObject;
+	
 	import flash.utils.Dictionary;
 	
 	public class GameObjectPool
@@ -76,9 +77,6 @@ package com.mikechambers.sgf.pools
 			{
 				go = new classType();
 			}
-
-			//Log.getLogger("LOG").info("get", classType, pool.length);
-
 			return go;
 		}
 		
@@ -88,12 +86,29 @@ package com.mikechambers.sgf.pools
 			var classType:Class = go["constructor"] as Class;
 						
 			var pool:Array = getPool(classType);
-			pool.push(go);
+			
+			var hasObject:Boolean = false;
+			
+			for each(var g:GameObject in pool)
+			{
+				if(g == go)
+				{
+					hasObject = true;
+					break;
+				}
+			}
+			
+			if(!hasObject)
+			{
+				pool.push(go);
+			}
+				
 			go.pause();
+			
+			//not we might be able to just set the visiblity on this, and keep
+			//it cached by the GPU
 			go.x = -50;
 			go.y = -50;
-			
-			//Log.getLogger("LOG").info("return", classType, pool.length);
 		}
 	}
 }
