@@ -77,7 +77,7 @@ package com.mikechambers.sgf.pools
 				go = new classType();
 			}
 
-			//trace("get", classType, pool.length);
+			//Log.getLogger("LOG").info("get", classType, pool.length);
 
 			return go;
 		}
@@ -93,7 +93,7 @@ package com.mikechambers.sgf.pools
 			go.x = -50;
 			go.y = -50;
 			
-			//trace("return", classType, pool.length);
+			//Log.getLogger("LOG").info("return", classType, pool.length);
 		}
 	}
 }
