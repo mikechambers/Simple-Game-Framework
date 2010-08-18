@@ -77,6 +77,8 @@ package com.mikechambers.sgf.pools
 			{
 				go = new classType();
 			}
+			go.visible = true;
+			
 			return go;
 		}
 		
@@ -105,10 +107,9 @@ package com.mikechambers.sgf.pools
 				
 			go.pause();
 			
-			//not we might be able to just set the visiblity on this, and keep
-			//it cached by the GPU
 			go.x = -50;
 			go.y = -50;
+			go.visible = false;
 		}
 	}
 }
