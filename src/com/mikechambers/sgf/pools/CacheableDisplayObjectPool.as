@@ -76,7 +76,8 @@ package com.mikechambers.sgf.pools
 			{
 				go = new classType();
 			}
-
+			
+			go.visible = true;
 			return go;
 		}
 		
@@ -106,6 +107,7 @@ package com.mikechambers.sgf.pools
 			//need to allow these values to be set
 			go.x = -50;
 			go.y = -50;
+			go.visible = false;
 		}
 	}
 }
